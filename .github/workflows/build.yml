@@ -1,0 +1,18 @@
+name: cicd_test
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  steps:
+    - name: deploy to ec2
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.EC2_HOST }}
+        username: ${{ secrets.EC2_USERNAME }}
+        key: ${{ secrets.EC2_KEY }}
+        port: ${{ secrets.EC2_PORT }}
+        script: |
+          ls -al
+          touch test.html
