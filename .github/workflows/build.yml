@@ -5,16 +5,18 @@ on:
     branches: [main]
 
 jobs:
-  build:
+  build_to_ec2:
     runs-on: ubuntu-latest
     steps:
-      name: deploy to ec2
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.EC2_HOST }}
-        username: ${{ secrets.EC2_USERNAME }}
-        key: ${{ secrets.EC2_KEY }}
-        port: ${{ secrets.EC2_PORT }}
-        script: |
-          ls -al
-          touch test.html
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: deploy to ec2
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_KEY }}
+          port: ${{ secrets.EC2_PORT }}
+          script: |
+            ls -al
+            touch test.html
